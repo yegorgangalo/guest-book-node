@@ -19,4 +19,8 @@ const postDataMongo = (Model) => async (req, res) => {
     }
 }
 
-module.exports = { getDataMongo, postDataMongo }
+const renderMainServerPage = () => async (req, res) => {
+  res.render('layouts/main')
+}
+
+module.exports = { getDataMongo, postDataMongo, renderMainServerPage }
