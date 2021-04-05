@@ -3,8 +3,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose')
 const exphbs = require('express-handlebars');
-const { CommentModel } = require('./models/models')
-const { getDataMongo, postDataMongo, deleteDataMongo, patchDataMongo, renderMainServerPage } = require('./api/apilogic');
+const { renderMainServerPage } = require('./api/apilogic');
+const commentsRouter = require('./routes/comments')
 
 const PORT = process.env.PORT || 3003;
 
@@ -24,10 +24,7 @@ app.use(express.json());
 app.use(cors());
 
 app.get('/', renderMainServerPage())
-app.get('/comments', getDataMongo(CommentModel));
-app.post('/comments', postDataMongo(CommentModel));
-app.delete('/comments/:id', deleteDataMongo(CommentModel));
-app.patch('/comments/:id', patchDataMongo(CommentModel));
+app.use('/comments', commentsRouter)
 
 async function start() {
   try {
