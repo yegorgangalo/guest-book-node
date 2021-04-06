@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
-const renderMainServerPage = (req, res) => {
-  res.render('index', { title: 'Guest-Book Back-End' })
-}
+const { renderMainServerPage, renderCommentsServerPage } = require('./api/indexAPI')
+const { CommentModel } = require('./models/models')
 
 router.get('/', renderMainServerPage);
+router.get('/comments', renderCommentsServerPage(CommentModel));
 
 module.exports = router;

@@ -1,0 +1,15 @@
+<h1>Comments Page</h1>
+{{#if comments.length}}
+<ul class="list">
+    {{#each comments}}
+    <li class="commentBlock">
+        {{!-- {{this}} --}}
+        <p class="entry"><span class="key">_id:</span> {{_id}}</p>
+        <p class="entry"><span class="key">name:</span> {{name}}</p>
+        <p class="entry"><span class="key">comment:</span><span class="comment">{{comment}}</span></p>
+    </li>
+    {{/each}}
+</ul>
+{{else}}
+<p>There are no comments in data base</p>
+{{/if}}
