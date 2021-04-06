@@ -11,8 +11,9 @@ const commentSchema = new Schema({
   comment: {
     type: String,
     required: [true, 'is required'],
+    minlength: [1, 'Min length 1 character'],
   },
-})
+}, { versionKey: false, timestamps: true })
 
 const CommentModel = model('CommentModel', commentSchema);
 module.exports = {CommentModel}

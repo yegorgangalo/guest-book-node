@@ -10,7 +10,7 @@ const getDataMongo = (Model) => async (req, res) => {
 
 const postDataMongo = (Model) => async (req, res) => {
     try {
-        const newData = new Model({ ...req.body })
+        const newData = new Model(req.body)
         await newData.save();
         res.status(201).send(newData);
     } catch (err) {
@@ -31,7 +31,7 @@ const deleteDataMongo = (Model) => async (req, res) => {
 
 const patchDataMongo = (Model) => async (req, res) => {
     try {
-        const updated = await Model.findOneAndUpdate({ _id: req.params.id }, { ...req.body })
+        const updated = await Model.findOneAndUpdate({ _id: req.params.id }, req.body)
         res.status(200).send(updated);
     } catch (err) {
         res.status(400).send(err);
