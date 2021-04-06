@@ -25,6 +25,6 @@ app.use(express.json())
 app.use(cors())
 
 app.use('/', indexRouter)
-app.use('/comments', commentsRouter)
+app.use('/api/comments', commentsRouter)
 
 module.exports = app
