@@ -4,8 +4,8 @@ const express = require('express');
 const cors = require('cors');
 const logger = require('morgan');
 const exphbs = require('express-handlebars');
-const commentsRouter = require('./routes/comments')
-const indexRouter = require('./routes/index');
+const commentsRouter = require('./routes/commentsRoutes')
+const indexRouter = require('./routes/indexRoutes');
 
 const app = express();
 
@@ -26,5 +26,13 @@ app.use(cors())
 
 app.use('/', indexRouter)
 app.use('/api/comments', commentsRouter)
+
+app.use((_req, res) => {
+  res.status(404).send({ message: 'Not found' })
+})
+
+app.use((err, _req, res, _next) => {
+  res.status(500).send({ message: err.message })
+})
 
 module.exports = app
