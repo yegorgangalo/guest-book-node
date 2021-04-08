@@ -5,13 +5,13 @@ const handlerReturn = (result, successCode = 200) => ({
   data: result ? result : { status: 'error', message: 'Not found' },
 });
 
-const handlerMongoGetById = async (Model, req) => {
-  const result = await Model.findOne({ _id: req.params.id });
+const handlerMongoGetAll = async Model => {
+  const result = await Model.find({});
   return handlerReturn(result);
 };
 
-const handlerMongoGetAll = async Model => {
-  const result = await Model.find({});
+const handlerMongoGetById = async (Model, req) => {
+  const result = await Model.findOne({ _id: req.params.id });
   return handlerReturn(result);
 };
 
