@@ -32,7 +32,8 @@ app.use((_req, res) => {
 })
 
 app.use((err, _req, res, _next) => {
-  res.status(err.status || 500).send({ message: err.message })
+  console.log('error last 500');
+  res.status(err.status || 500).send({ message: err.message.replace(/"/g, "") })
 })
 
 module.exports = app
