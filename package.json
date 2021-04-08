@@ -27,7 +27,8 @@
     "start": "cross-env NODE_ENV=production node server.js",
     "dev": "cross-env NODE_ENV=development nodemon server.js",
     "lint": "eslint . --ext .js",
-    "lint:fix": "eslint --fix .js"
+    "lint:fix": "eslint --fix .js",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
@@ -38,5 +39,8 @@
   "bugs": {
     "url": "https://github.com/yegorgangalo/guest-book-node/issues"
   },
-  "homepage": "https://github.com/yegorgangalo/guest-book-node#readme"
+  "homepage": "https://github.com/yegorgangalo/guest-book-node#readme",
+  "lint-staged": {
+    "*.{js,css,md}": "prettier --write"
+  }
 }
