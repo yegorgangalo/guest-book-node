@@ -1,15 +1,15 @@
 const express = require('express')
 const router = express.Router()
-const {validateComment} = require('./validation/validationComments')
-const { CommentModel } = require('./models/models')
-const {getDataMongo, postDataMongo, deleteDataMongo, patchDataMongo} = require('./api/commentsAPI')
+const {validateCreateComment, validateUpdateComment} = require('./validation/validationComments')
+const {getDataMongo, getByIdDataMongo, postDataMongo, deleteDataMongo, patchDataMongo} = require('./controllers/commentsAPI')
 
 router
-    .get('/', getDataMongo(CommentModel))
-    .post('/', validateComment, postDataMongo(CommentModel))
+    .get('/', getDataMongo)
+    .post('/', validateCreateComment, postDataMongo)
 
 router
-    .delete('/:id', deleteDataMongo(CommentModel))
-    .patch('/:id', validateComment, patchDataMongo(CommentModel))
+    .get('/:id', getByIdDataMongo)
+    .delete('/:id', deleteDataMongo)
+    .patch('/:id', validateUpdateComment, patchDataMongo)
 
 module.exports = router

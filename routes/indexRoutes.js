@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { renderMainServerPage, renderCommentsServerPage } = require('./api/indexAPI')
+const { renderMainServerPage, renderCommentsServerPage } = require('./controllers/indexAPI')
 const { CommentModel } = require('./models/models')
 
 router.get('/', renderMainServerPage);

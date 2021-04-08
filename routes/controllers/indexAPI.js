@@ -12,8 +12,6 @@ const renderCommentsServerPage = (Model) => async (_req, res) => {
       res.render('comments', options)
     } catch (err) {
         next(err)
-        // res.status(400).send(err);
-        // return console.error(err);
     }
 }
 
