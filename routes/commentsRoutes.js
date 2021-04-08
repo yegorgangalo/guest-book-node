@@ -12,11 +12,11 @@ const {
   patchDataMongo,
 } = require('./controllers/commentsAPI');
 
+router.get('/', getDataMongo).post('/', validateCreateComment, postDataMongo);
+
 router
   .get('/:id', getByIdDataMongo)
   .delete('/:id', deleteDataMongo)
   .patch('/:id', validateUpdateComment, patchDataMongo);
-
-router.get('/', getDataMongo).post('/', validateCreateComment, postDataMongo);
 
 module.exports = router;
