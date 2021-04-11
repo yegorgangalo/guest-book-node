@@ -5,18 +5,18 @@ const {
   validateUpdateComment,
 } = require('./validation/validationComments');
 const {
-  getDataMongo,
-  getByIdDataMongo,
-  postDataMongo,
-  deleteDataMongo,
-  patchDataMongo,
+  getDataDB,
+  getByIdDataDB,
+  postDataDB,
+  deleteDataDB,
+  patchDataDB,
 } = require('./controllers/commentsAPI');
 
-router.get('/', getDataMongo).post('/', validateCreateComment, postDataMongo);
+router.get('/', getDataDB).post('/', validateCreateComment, postDataDB);
 
 router
-  .get('/:id', getByIdDataMongo)
-  .delete('/:id', deleteDataMongo)
-  .patch('/:id', validateUpdateComment, patchDataMongo);
+  .get('/:id', getByIdDataDB)
+  .delete('/:id', deleteDataDB)
+  .patch('/:id', validateUpdateComment, patchDataDB);
 
 module.exports = router;
