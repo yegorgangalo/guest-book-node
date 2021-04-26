@@ -25,7 +25,7 @@ connection.on('disconnected', () => {
 
 process.on('SIGINT', async () => {
   await connection.close();
-  console.log('Connection for db closed and app termination'.red);
+  console.log('Connection for db closed and app terminated'.red);
   process.exit(1);
 });
 
