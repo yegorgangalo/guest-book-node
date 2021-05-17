@@ -10,6 +10,13 @@ const HttpCode = {
   INTERNAL_SERVER_ERROR: 500,
 };
 
+const Sex = {
+  MALE: 'male',
+  FEMALE: 'female',
+  NONE: 'none',
+};
+
 module.exports = {
   HttpCode,
+  Sex,
 };

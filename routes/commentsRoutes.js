@@ -11,12 +11,15 @@ const {
   deleteDataMongo,
   patchDataMongo,
 } = require('./controllers/commentsAPI');
-
-router.get('/', getDataMongo).post('/', validateCreateComment, postDataMongo);
+const guard = require('../helpers/guard');
 
 router
-  .get('/:id', getByIdDataMongo)
-  .delete('/:id', deleteDataMongo)
-  .patch('/:id', validateUpdateComment, patchDataMongo);
+  .get('/', guard, getDataMongo)
+  .post('/', guard, validateCreateComment, postDataMongo);
+
+router
+  .get('/:id', guard, getByIdDataMongo)
+  .delete('/:id', guard, deleteDataMongo)
+  .patch('/:id', guard, validateUpdateComment, patchDataMongo);
 
 module.exports = router;

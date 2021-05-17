@@ -1,42 +1,55 @@
-const { CommentModel } = require('../models/models');
+const CommentModel = require('../models/commentModel');
+const { HttpCode } = require('../../helpers/constants');
 
-const handlerReturn = (result, successCode = 200) => ({
-  code: result ? successCode : 404,
+const handlerReturn = (result, successCode = HttpCode.OK) => ({
+  code: result ? successCode : HttpCode.NOT_FOUND,
   data: result ? result : { status: 'error', message: 'Not found' },
 });
 
-const handlerMongoGetAll = async Model => {
-  const result = await Model.find({});
+const handlerMongoGetAll = async (Model, req) => {
+  const result = await Model.find({ owner: req.user.id }).populate({
+    path: 'owner',
+    select: 'email -_id',
+  });
   return handlerReturn(result);
 };
 
 const handlerMongoGetById = async (Model, req) => {
-  const result = await Model.findOne({ _id: req.params.id });
+  const result = await Model.findOne({
+    _id: req.params.id,
+    owner: req.user.id,
+  }).populate({
+    path: 'owner',
+    select: 'email -_id',
+  });
   return handlerReturn(result);
 };
 
 const handlerMongoPost = async (Model, req) => {
-  const result = await Model.create(req.body);
-  return handlerReturn(result, 201);
+  const result = await Model.create({ ...req.body, owner: req.user.id });
+  return handlerReturn(result, HttpCode.CREATED);
 };
 
 const handlerMongoDelete = async (Model, req) => {
-  const result = await Model.findOneAndRemove({ _id: req.params.id });
+  const result = await Model.findOneAndRemove({
+    _id: req.params.id,
+    owner: req.user.id,
+  });
   return handlerReturn(result);
 };
 
 const handlerMongoPatch = async (Model, req) => {
   const result = await Model.findOneAndUpdate(
-    { _id: req.params.id },
+    { _id: req.params.id, owner: req.user.id },
     req.body,
     { new: true },
   );
   return handlerReturn(result);
 };
 
-const controller = (handlerMongo, Model) => async (req, res, next) => {
+const controller = (handlerMongoRequest, Model) => async (req, res, next) => {
   try {
-    const { code, data } = await handlerMongo(Model, req);
+    const { code, data } = await handlerMongoRequest(Model, req);
     return res.status(code).send(data);
   } catch (err) {
     next(err);
