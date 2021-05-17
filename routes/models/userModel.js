@@ -39,7 +39,7 @@ const userSchema = new Schema(
   { versionKey: false, timestamps: true },
 );
 
-userSchema.pre('create', async function (next) {
+userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     return next();
   }
@@ -52,9 +52,13 @@ userSchema.methods.validPassword = async function (password) {
   return await bcrypt.compare(password, this.password);
 };
 
-// userSchema.static.findByEmail = function(email) {
-//     return this.findOne({ email });
-// });
+userSchema.statics.findByEmail = async function ({ email }) {
+  return await this.findOne({ email });
+};
+
+userSchema.statics.updateToken = async function ({ _id, token }) {
+  return await UserModel.findOneAndUpdate({ _id }, { token }, { new: true });
+};
 
 const UserModel = model('UserModel', userSchema);
 
